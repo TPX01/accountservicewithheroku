@@ -1,0 +1,84 @@
+#%RAML 0.8
+title: AccountService
+version: v1
+baseUri: http://localhost:8080
+schemas:
+  - accounts: !include schemas/accounts.schema.json
+  - account: !include schemas/account.schema.json
+  - errorResource: !include schemas/errorResource.schema.json
+
+/accounts:
+  get:
+    description: Get list of accounts
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/json:
+            schema: accounts
+            example: !include examples/accounts.example.json
+      404:
+        description: Nothing found for your request
+        body:
+          application/json:
+           schema: errorResource
+      500:
+        description: Internal server error
+        body:
+          application/json:
+           schema: errorResource
+  post:
+    description: Create new accounts
+    body:
+      application/json:
+       schema: accounts
+       example: !include examples/accounts.example.json
+    responses:
+      201:
+        description: Object created succesfully.
+      400:
+        description: Bad request. The provided input does not comply to the contract.
+        body:
+          application/json:
+           schema: errorResource
+      500:
+        description: Internal server error
+        body:
+          application/json:
+           schema: errorResource
+  /{accountId}:
+      displayName: Get Account Details
+      get:
+        description: Retrieve account details
+        responses:
+          200:
+            description: Successful request
+            body:
+              application/json:
+                schema: account
+                example: !include examples/account.example.json
+          404:
+            description: Nothing found for your request
+            body:
+              application/json:
+               schema: errorResource
+          500:
+            description: Internal server error
+            body:
+              application/json:
+               schema: errorResource
+      delete:
+        description: Delete account
+        responses:
+          204:
+            description: Account deleted
+          404:
+            description: Nothing found for your request
+            body:
+              application/json:
+               schema: errorResource
+          500:
+            description: Internal server error
+            body:
+              application/json:
+               schema: errorResource

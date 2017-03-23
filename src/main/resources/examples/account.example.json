@@ -1,0 +1,10 @@
+{
+	"label": "My personal bank account",
+	"type": "savings",
+	"owners": ["01x5","52x8"],
+	"iban": "BE62510007547061",
+	"moneyAmount":{
+		"amount": 1000,
+		"currency": "EUR"
+	}
+}

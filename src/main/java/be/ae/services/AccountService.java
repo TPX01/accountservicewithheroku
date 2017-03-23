@@ -4,15 +4,15 @@ import be.ae.services.exceptions.BusinessException;
 import be.ae.services.exceptions.ErrorCode;
 import be.ae.services.mapper.AccountMapper;
 import be.ae.services.model.Account;
-import be.ae.services.model.AccountType;
 import be.ae.services.repositories.AccountRepository;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,14 +43,21 @@ public class AccountService {
         if (!isValidCreateAccountCommand(account)) {
             throw new BusinessException(ErrorCode.MISSING_CREATE_ACCOUNT_INFORMATION);
         }
-
-        final Account accountModel = new Account(AccountType.fromValue(account.getType().value()), account.getOwners());
+        Account accountModel = accountMapper.map(account);
         accountRepository.save(accountModel);
         return accountModel.getId();
     }
 
     private boolean isValidCreateAccountCommand(@RequestBody be.ae.rest.model.Account account) {
-        return account.getType() != null && !CollectionUtils.isEmpty(account.getOwners());
+        List<Boolean> validationList = new ArrayList<>();
+        validationList.add(account.getType() != null);
+        validationList.add(!CollectionUtils.isEmpty(account.getOwners()));
+        validationList.add(!StringUtils.isEmpty(account.getIban()));
+        if (account.getMoneyAmount() != null) {
+            validationList.add(account.getMoneyAmount().getAmount() != null);
+            validationList.add(!StringUtils.isEmpty(account.getMoneyAmount().getCurrency()));
+        }
+        return !validationList.contains(false);
     }
 
     public void delete(String id) {

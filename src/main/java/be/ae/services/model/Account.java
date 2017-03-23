@@ -1,12 +1,8 @@
 package be.ae.services.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.List;
 
 @Entity
@@ -42,27 +38,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(AccountType type, List<String> ownerIds) {
-        this.label = generateLabel(type);
-        this.type = type;
-        this.iban = generateIban();
-        this.balance = new MoneyAmount(BigDecimal.ZERO, Currency.getInstance("EUR"));
-        this.ownerIds = ownerIds;
-    }
-
-    private String generateLabel(AccountType type) {
-        switch (type) {
-            case CHECKINGS:
-                return "my current account";
-            case SAVINGS:
-                return "my savings account";
-            default:
-                return "my account";
+    public void generateLabel(AccountType accountType) {
+        switch (accountType) {
+            case CHECKINGS: this.label = "my current account"; break;
+            case SAVINGS: this.label =  "my savings account"; break;
+            default: this.label =  "my account"; break;
         }
-    }
-
-    private String generateIban() {
-        return "new iban generated";
     }
 
     public String getId() {

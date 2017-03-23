@@ -1,4 +1,4 @@
-package be.ae.services;
+package be.ae;
 
 import be.ae.rest.model.ErrorResource;
 import be.ae.services.exceptions.*;

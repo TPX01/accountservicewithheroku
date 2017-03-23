@@ -1,7 +1,7 @@
 #%RAML 0.8
 title: AccountService
 version: v1
-baseUri: http://localhost:8080
+baseUri: http://localhost:8080/api
 schemas:
   - accounts: !include schemas/accounts.schema.json
   - account: !include schemas/account.schema.json
@@ -28,11 +28,11 @@ schemas:
           application/json:
            schema: errorResource
   post:
-    description: Create new accounts
+    description: Create new account
     body:
       application/json:
-       schema: accounts
-       example: !include examples/accounts.example.json
+       schema: account
+       example: !include examples/account.example.json
     responses:
       201:
         description: Object created succesfully.

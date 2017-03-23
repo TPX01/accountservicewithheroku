@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum AccountType {
-    CHECKING("checking"), SAVINGS("savings");
+    CHECKINGS("checkings"), SAVINGS("savings");
 
     private final String value;
     private final static Map<String, AccountType> CONSTANTS = new HashMap<String, AccountType>();

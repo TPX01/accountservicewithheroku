@@ -1,6 +1,5 @@
 package be.ae.services;
 
-import be.ae.services.aspects.LogCall;
 import be.ae.services.exceptions.BusinessException;
 import be.ae.services.exceptions.ErrorCode;
 import be.ae.services.mapper.AccountMapper;
@@ -29,20 +28,17 @@ public class AccountService {
     public AccountService() {
     }
 
-    @LogCall
     @Transactional(readOnly = true)
     public List<be.ae.rest.model.Account> getAccounts() {
         final List<Account> accountModels = accountRepository.getAccounts();
         return accountMapper.map(accountModels);
     }
 
-    @LogCall
     public be.ae.rest.model.Account get(String id) {
         Account accountModel = accountRepository.getById(id);
         return accountMapper.map(accountModel);
     }
 
-    @LogCall
     public String create(be.ae.rest.model.Account account) {
         if (!isValidCreateAccountCommand(account)) {
             throw new BusinessException(ErrorCode.MISSING_CREATE_ACCOUNT_INFORMATION);
@@ -57,7 +53,6 @@ public class AccountService {
         return account.getType() != null && !CollectionUtils.isEmpty(account.getOwners());
     }
 
-    @LogCall
     public void delete(String id) {
         Account account = accountRepository.getById(id);
         accountRepository.delete(account);

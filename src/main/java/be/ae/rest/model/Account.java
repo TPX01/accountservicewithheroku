@@ -109,7 +109,7 @@ public class Account {
 
     public enum Type {
 
-        CHECKING("checking"),
+        CHECKINGS("checkings"),
         SAVINGS("savings");
         private final String value;
         private final static Map<String, Account.Type> CONSTANTS = new HashMap<String, Account.Type>();

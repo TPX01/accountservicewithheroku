@@ -52,12 +52,12 @@ public class Account {
 
     private String generateLabel(AccountType type) {
         switch (type) {
-            case CHECKING:
-                return "mijn zichtrekening";
+            case CHECKINGS:
+                return "my current account";
             case SAVINGS:
-                return "mijn spaarrekening";
+                return "my savings account";
             default:
-                return "mijn rekening";
+                return "my account";
         }
     }
 

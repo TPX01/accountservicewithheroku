@@ -23,7 +23,7 @@
 
 		"type": {
 			"type": "string",
-			"enum": ["checking", "savings"]
+			"enum": ["checkings", "savings"]
 		},
 
 		"owners": {
